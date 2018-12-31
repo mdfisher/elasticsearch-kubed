@@ -38,6 +38,7 @@ data_node_configs = {
     }
 }
 
+
 def check_cert_presence(cert_dir):
     files = ['ca.crt', 'ca.key', 'logstash.crt', 'logstash.key']
     for file in files:
@@ -46,14 +47,16 @@ def check_cert_presence(cert_dir):
             return False
     return True
 
+
 def prompt_for_logstash_certs(context, cert_dir):
     if check_cert_presence(cert_dir):
         print(f"Using keys and certs for Logstash found in {cert_dir}.")
         context['skip_logstash'] = False
     else:
-        do_logstash = prompt("Would you like to set up Logstash (with SSL beats input)? (Y/n)",
-            "^[yYnN]?$"
-        )
+        do_logstash = prompt(
+                             "Would you like to set up Logstash (with SSL beats input)? (Y/n)",
+                              "^[yYnN]?$"
+                             )
         if do_logstash and do_logstash.lower() != 'y':
             context['skip_logstash'] = True
             return
@@ -99,6 +102,7 @@ def prompt_for_logstash_certs(context, cert_dir):
     shutil.copytree(cert_dir, template_secrets_dir)
     context['logstash_beats_port'] = '8751'
 
+
 def prompt_for_oauth_config(context):
     do_oauth = prompt("Would you like to configure oauth2_proxy to authorize a GitHub team? (y/N)",
         "^[yYnN]?$"
@@ -114,8 +118,9 @@ def prompt_for_oauth_config(context):
     context['oauth_client_secret'] = prompt('Enter the OAuth Client Secret', '^[a-z0-9-]+$')
     context['oauth_cookie_name'] = '_ghoauth'
     context['oauth_cookie_secret'] = random_token()
-    context['ssl_crt'] = prompt('Enter the path to the SSL certificate', readFile=True)
-    context['ssl_key'] = prompt('Enter the path to the SSL private key', readFile=True)
+    context['ssl_crt'] = prompt('Enter the path to the SSL certificate', read_file=True)
+    context['ssl_key'] = prompt('Enter the path to the SSL private key', read_file=True)
+
 
 def do_prompts():
     context = {}
@@ -153,6 +158,7 @@ def do_prompts():
     prompt_for_logstash_certs(context, os.path.join(clusters_dir, context['namespace'], "logstash-ssl-keys"))
     prompt_for_oauth_config(context)
     return context
+
 
 def main():
     print('These scripts will create configuration files to set up an Elasticsearch cluster in Kubernetes.')
