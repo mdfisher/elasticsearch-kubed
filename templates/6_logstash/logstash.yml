@@ -44,6 +44,9 @@ spec:
         - name: logstash-pipelines
           configMap:
             name: logstash-pipelines
+        - name: logstash-pipelines
+          configMap:
+            name: logstash-pipeline-python
         - name: logstash-tls
           secret:
             secretName: logstash-tls
