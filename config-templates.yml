@@ -1,0 +1,18 @@
+# The non prompting deploy config for ./config-templates.py
+cluster:
+  data_node_replicas: 2
+  storage_class: standard
+  heap_size: 512m
+  memory_limit: 1Gi
+
+logstash:
+  enabled: true
+  beats_port: 8751
+  python_log_handler_port: 5959
+  ssl:
+    ca_name: Logstash CA
+    country: US
+    state: CA
+    loc: Los Angeles
+    org: ACME
+    org_unit: Pipeline
