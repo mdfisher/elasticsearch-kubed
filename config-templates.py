@@ -47,6 +47,25 @@ def check_cert_presence(cert_dir):
             return False
     return True
 
+def get_logstash_certs(context, cert_dir, ):
+
+
+    ensure_dir(os.path.join(cert_dir,'afile'))
+    subprocess.run([
+        os.path.join(dirname, 'templates', '6_logstash', 'ssl-gen.sh'),
+        ca_name, url, country, state, loc, org, org_unit, cert_dir
+    ], check=True)
+    if not check_cert_presence(cert_dir):
+        raise RuntimeError('certs failed to generate')
+    try:
+        shutil.rmtree(template_secrets_dir)
+    except:
+        pass
+    shutil.copytree(cert_dir, template_secrets_dir)
+    context['logstash_beats_port'] = '8751'
+    context['logstash_python_log_hndlr_port'] = '5959'
+
+
 
 def prompt_for_logstash_certs(context, cert_dir):
     if check_cert_presence(cert_dir):
@@ -62,6 +81,7 @@ def prompt_for_logstash_certs(context, cert_dir):
             return
         else:
             context['skip_logstash'] = False
+
         print("Provide the following information to generate self-signed certificates: ")
         ca_name = prompt("Certificate Authority Name", default='Logstash CA')
         url = prompt("CN - Common Name for Logstash",

@@ -1,24 +1,22 @@
 # The non prompting deploy config for ./config-templates.py
-escluster:
+context:
   namespace: default
   cluster_name: escluster
-  skip_logstash: false
-  skip_oauth: true
-  esnodes:
-    data_node_replicas: 2
+  data_node:
+    replicas: 2
     storage_class: standard
     heap_size: 512m
     memory_limit: 1Gi
-
-logstash:
-  enabled: true
-  beats_port: 8751
-  python_log_handler_port: 5959
-  ssl:
-    ca_name: Logstash CA
-    common_name: logstash
-    country: US
-    state: CA
-    loc: Los Angeles
-    org: ACME
-    org_unit: Pipeline
+    volume_size: 250
+  skip_logstash: false
+  skip_oauth: true
+  logstash_beats_port: 8751
+  logstash_python_log_hndlr_port: 5959
+ssl:
+  ca_name: Logstash CA
+  common_name: logstash
+  country: US
+  state: CA
+  loc: Los Angeles
+  org: ACME
+  org_unit: Pipeline
