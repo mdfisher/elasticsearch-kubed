@@ -14,6 +14,7 @@ spec:
     matchLabels:
       app: elasticsearch
       role: data
+  podManagementPolicy: Parallel
   template:
     metadata:
       labels:
