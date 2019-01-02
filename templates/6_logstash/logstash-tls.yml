@@ -10,3 +10,4 @@ data:
   ca.crt: {{ inc('secrets/ca.crt') | b64encode }}
   logstash.key: {{ inc('secrets/logstash.key') | b64encode }}
   logstash.crt: {{ inc('secrets/logstash.crt') | b64encode }}
+  logstash.crt.pem: {{ inc('secrets/logstash.pem') | b64encode }}

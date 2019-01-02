@@ -25,11 +25,16 @@ function sign {
   rm $1.csr
 }
 
+function cp_convert_crt_to_pem {
+  openssl x509 -in $1 -out $1.pem -outform PEM
+}
+
 cd "$DEST"
 
 make_ca
 make_key_and_csr logstash "$URL"
 sign logstash ca
+cp_convert_crt_to_pem logstash.crt
 make_key_and_csr client "*"
 sign client ca
 rm ca.srl

@@ -7,3 +7,5 @@ data:
 {% macro inc(str) %}{% include str %}{% endmacro %}
   logstash.conf: |
 {{ inc('6_logstash/logstash.conf')|indent(first=true) }}
+  python-logs.conf: |
+{{ inc('6_logstash/python-logs.conf')|indent(first=true) }}
