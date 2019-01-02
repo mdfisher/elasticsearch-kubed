@@ -10,6 +10,8 @@ spec:
   ports:
     - name: beats
       port: {{ logstash_beats_port }}
+    - name: python-logs
+      port: {{ logstash_python_log_hndlr_port }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -33,6 +35,7 @@ spec:
           image: docker.elastic.co/logstash/logstash:6.5.2
           ports:
             - containerPort: {{ logstash_beats_port }}
+            - containerPort: {{ logstash_python_log_hndlr_port }}
           volumeMounts:
             - name: logstash-pipelines
               mountPath: /usr/share/logstash/pipeline

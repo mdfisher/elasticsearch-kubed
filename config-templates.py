@@ -101,6 +101,7 @@ def prompt_for_logstash_certs(context, cert_dir):
         pass
     shutil.copytree(cert_dir, template_secrets_dir)
     context['logstash_beats_port'] = '8751'
+    context['logstash_python_log_hndlr_port'] = '5959'
 
 
 def prompt_for_oauth_config(context):
